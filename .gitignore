@@ -1,4 +1,4 @@
-env
+*.env*
 node_modules
 *.sw?
 serverless-output.yml

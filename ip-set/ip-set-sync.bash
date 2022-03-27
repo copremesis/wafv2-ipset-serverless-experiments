@@ -1,6 +1,12 @@
 #!/bin/bash
 
-source ./env 
+
+if [[ -z .env ]]; then
+  echo "Please create a file '.env' using '.env.example' as a guide"
+  exit
+fi
+
+source ./.env  # see .env.example for details
 
 #set proper env vars
 #ie AWS_PROFILE, cacheFile, etc.
