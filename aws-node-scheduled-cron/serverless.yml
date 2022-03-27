@@ -1,0 +1,26 @@
+org: copremesis
+app: aws-node-scheduled-cron
+service: aws-node-scheduled-cron
+
+frameworkVersion: '3'
+
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  region: us-west-2
+
+functions:
+  rateHandler:
+    handler: handler.run
+    events:
+      # Invoke Lambda function every minute
+      - schedule: rate(1 minute)
+  cronHandler:
+    handler: handler.run
+    events:
+      # Invoke Lambda function every 2nd minute from Mon-Fri
+      - schedule: cron(*/5 * * * ? *)
+    environment:
+      NAME: ${env:NAME}
+      IPSET_ID: ${env:IPSET_ID}

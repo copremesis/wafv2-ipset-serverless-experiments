@@ -1,0 +1,17 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Parameters:
+  someVar:
+    Description: Just a placed holder for possible future parameters like keys, urls or even cron strings
+    Type: String
+Resources:
+   SampleIPSet:
+        Type: 'AWS::WAFv2::IPSet'
+        Properties:
+          Description: SampleIPSet
+          Name: SampleIPSet
+          Scope: REGIONAL
+          IPAddressVersion: IPV4
+          Addresses:
+            - 192.168.0.114/32
+            - 192.168.1.114/32
