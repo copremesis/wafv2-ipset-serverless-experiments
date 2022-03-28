@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 if [[ -z .env ]]; then
   echo "Please create a file '.env' using '.env.example' as a guide"
   exit
@@ -13,9 +12,10 @@ source ./.env  # see .env.example for details
 #see env.example
 
 aws wafv2 get-ip-set \
-    --name $name \
-    --scope REGIONAL \
-    --id $ipSetId  > $cacheFile
+    --name $NAME \
+    --scope $SCOPE \
+    --region $REGION \
+    --id $IPSET_ID  > $cacheFile
 
 lockToken=$(jq -r '.LockToken' $cacheFile) 
 
@@ -47,9 +47,10 @@ done
 
 echo "hold my beer..."
 aws wafv2 update-ip-set \
-    --name=$name \
-    --scope=REGIONAL \
-    --id=$ipSetId \
+    --name $NAME \
+    --scope $SCOPE \
+    --region $REGION \
+    --id $IPSET_ID \
     --addresses "${arr[@]}" \
-    --lock-token=$lockToken 
+    --lock-token $lockToken 
 

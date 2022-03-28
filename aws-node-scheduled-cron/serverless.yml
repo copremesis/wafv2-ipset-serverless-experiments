@@ -17,5 +17,7 @@ functions:
           rate: cron(*/5 * * * ? *)
           enabled: false
     environment:
-      NAME: ${env:NAME}
+      NAME:     ${env:NAME}
       IPSET_ID: ${env:IPSET_ID}
+      SCOPE:    ${env:SCOPE}
+      REGION:   ${env:REGION}

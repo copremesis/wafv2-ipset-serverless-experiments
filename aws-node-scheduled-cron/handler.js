@@ -1,4 +1,4 @@
-'use strict';
+' us-east-1use strict';
 
 const logJson = (object) => {
   console.log(JSON.stringify(object, null, 2));
@@ -7,9 +7,9 @@ const logJson = (object) => {
 const update_ipset = async (wafv2) => {
   console.log('BEGIN WAF UPDATE');
   await wafv2.getIPSet({
-    Id: process.env.IPSET_ID, 
-    Name: process.env.NAME,  
-    Scope: 'REGIONAL',       
+    Id: process.env.IPSET_ID,
+    Name: process.env.NAME,
+    Scope: process.env.SCOPE,
   }, async (err, data) => {
     if (err) console.error(err, err.stack); // an error occurred
     else  {
@@ -22,10 +22,10 @@ const update_ipset = async (wafv2) => {
       logJson(addresses);
       const params = {
         Addresses: addresses,
-        Id: process.env.IPSET_ID, 
+        Id: process.env.IPSET_ID,
         LockToken: lockToken,
-        Name: process.env.NAME, 
-        Scope: 'REGIONAL', 
+        Name: process.env.NAME,
+        Scope: process.env.SCOPE,
         Description: 'scheduled sync'
       };
       await wafv2.updateIPSet(params, (err, data) => {
@@ -39,7 +39,7 @@ const update_ipset = async (wafv2) => {
 
 module.exports.run = async (event, context) => {
   const AWS = require("aws-sdk");
-  AWS.config.update({region:'us-west-2'});
+  AWS.config.update({region: process.env.REGION});
   logJson(event);
   const wafv2 = new AWS.WAFV2({apiVersion: '2019-07-29'});
   logJson(process.env);

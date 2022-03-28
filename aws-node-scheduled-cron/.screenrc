@@ -1,0 +1,15 @@
+startup_message off
+screen -t "log"       0 bash
+stuff "sls logs -f cronHandler -t^M"
+screen -t "editor"    1 bash
+stuff "^M"
+screen -t "bash"      2 bash
+stuff "^M"
+screen -t "bash"      3 bash
+stuff "^M"
+screen -t "bash"      4 bash
+stuff "^M"
+screen -t "bash"      5 bash
+select 0
+hardstatus alwayslastline
+hardstatus string '%{= kG}[ %{G}%H %{g}][%= %{= kw}%?%-Lw%?%{r} (%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %d/%m%{W}%c %{g}]'
