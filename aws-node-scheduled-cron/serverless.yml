@@ -8,14 +8,21 @@ provider:
   name: aws
   runtime: nodejs14.x
   region: us-west-2
-
+  iam:
+    role:
+      statements:
+      - Effect: Allow
+        Action:
+          - wafv2:*
+        Resource:
+          - arn:aws:wafv2:us-west-2:886436215162:regional/ipset/${env:IPSET_NAME}/${env:IPSET_ID}
 functions:
   cronHandler:
     handler: handler.run
     events:
-      - schedule: 
+      - schedule:
           rate: cron(*/5 * * * ? *)
           enabled: false
     environment:
-      NAME: ${env:NAME}
+      IPSET_NAME: ${env:IPSET_NAME}
       IPSET_ID: ${env:IPSET_ID}
