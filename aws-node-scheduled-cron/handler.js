@@ -7,9 +7,9 @@ const logJson = (object) => {
 const update_ipset = async (wafv2) => {
   console.log('BEGIN WAF UPDATE');
   await wafv2.getIPSet({
-    Id: process.env.IPSET_ID, 
-    Name: process.env.NAME,  
-    Scope: 'REGIONAL',       
+    Id: process.env.IPSET_ID,
+    Name: process.env.IPSET_NAME,
+    Scope: 'REGIONAL',
   }, async (err, data) => {
     if (err) console.error(err, err.stack); // an error occurred
     else  {
@@ -22,10 +22,10 @@ const update_ipset = async (wafv2) => {
       logJson(addresses);
       const params = {
         Addresses: addresses,
-        Id: process.env.IPSET_ID, 
+        Id: process.env.IPSET_ID,
         LockToken: lockToken,
-        Name: process.env.NAME, 
-        Scope: 'REGIONAL', 
+        Name: process.env.IPSET_NAME,
+        Scope: 'REGIONAL',
         Description: 'scheduled sync'
       };
       await wafv2.updateIPSet(params, (err, data) => {

@@ -13,9 +13,9 @@ source ./.env  # see .env.example for details
 #see env.example
 
 aws wafv2 get-ip-set \
-    --name $name \
+    --name $IPSET_NAME \
     --scope REGIONAL \
-    --id $ipSetId  > $cacheFile
+    --id $IPSET_ID  > $cacheFile
 
 lockToken=$(jq -r '.LockToken' $cacheFile) 
 
@@ -47,9 +47,9 @@ done
 
 echo "hold my beer..."
 aws wafv2 update-ip-set \
-    --name=$name \
+    --name=$IPSET_NAME \
     --scope=REGIONAL \
-    --id=$ipSetId \
+    --id=$IPSET_ID \
     --addresses "${arr[@]}" \
     --lock-token=$lockToken 
 
